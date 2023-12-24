@@ -1,4 +1,12 @@
 <?php
+/**
+ * @copyright Copyright © 2023 BeastBytes - All rights reserved
+ * @license BSD 3-Clause
+ */
+
+declare(strict_types=1);
+
+namespace BeastBytes\Mermaid\Tests\Unit;
 
 use BeastBytes\Mermaid\Diagram\Diagram;
 use BeastBytes\Mermaid\Mermaid;
@@ -9,6 +17,12 @@ test('Mermaid create', function () {
     expect($mermaid)
         ->toBeInstanceOf(MermaidInterface::class)
         ->toBeInstanceOf(Diagram::class)
+    ;
+});
+
+test('Mermaid JavaScript', function () {
+    expect(Mermaid::js())
+        ->toBe(sprintf(Mermaid::JS, '{"startOnLoad":true}'))
     ;
 });
 
