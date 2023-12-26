@@ -14,6 +14,7 @@ class Mermaid
     public const JS = "<script type=\"module\">\n    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n    mermaid.initialize(%s)\n</script>";
     private const MERMAID = "<pre class=\"mermaid\">\n%s\n</pre>";
 
+    /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
     public static function create(string $name, array $parameters = []): MermaidInterface
     {
         $fqcn = __NAMESPACE__ . str_repeat("\\$name", 2);
@@ -31,6 +32,7 @@ class Mermaid
         );
     }
 
+    /** @psalm-param list<string> $mermaid */
     public static function render(array $mermaid): string
     {
         return sprintf(self::MERMAID, implode("\n", $mermaid));
