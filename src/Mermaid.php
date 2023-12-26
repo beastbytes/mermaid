@@ -12,7 +12,8 @@ class Mermaid
 {
     public const INDENTATION = '  ';
     public const JS = "<script type=\"module\">\n    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n    mermaid.initialize(%s)\n</script>";
-    public const MERMAID = "<pre class=\"mermaid\">\n%s\n</pre>";
+    private const CONFIG = "%%%%{init:%s}\n";
+    private const MERMAID = "<pre class=\"mermaid\">\n%s\n</pre>";
 
     public static function create(string $name, array $parameters = []): MermaidInterface
     {
@@ -25,8 +26,11 @@ class Mermaid
         return sprintf(self::JS, json_encode($config));
     }
 
-    public static function render(string $mermaid): string
+    public static function render(string $mermaid, ?array $config): string
     {
+        if ($config !== null) {
+            $mermaid = sprintf(self::CONFIG, json_encode($config, JSON_THROW_ON_ERROR)) . $mermaid;
+        }
         return sprintf(self::MERMAID, $mermaid);
     }
 }

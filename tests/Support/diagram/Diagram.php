@@ -14,9 +14,17 @@ use BeastBytes\Mermaid\MermaidInterface;
 class Diagram implements MermaidInterface
 {
     public const OUTPUT = 'mermaid';
+    public const TYPE = 'diagram';
 
+    public function __construct(private readonly ?array $config = null)
+    {
+    }
+
+    /**
+     * @throws \JsonException
+     */
     public function render(): string
     {
-        return Mermaid::render(self::OUTPUT);
+        return Mermaid::render(self::OUTPUT, $this->config);
     }
 }

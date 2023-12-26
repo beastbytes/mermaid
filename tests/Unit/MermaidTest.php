@@ -13,8 +13,9 @@ use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 
 test('Mermaid create', function () {
-    $mermaid = Mermaid::create('Diagram');
-    expect($mermaid)
+    $diagram = Mermaid::create('Diagram');
+
+    expect($diagram)
         ->toBeInstanceOf(MermaidInterface::class)
         ->toBeInstanceOf(Diagram::class)
     ;
@@ -27,8 +28,24 @@ test('Mermaid JavaScript', function () {
 });
 
 test('Mermaid render', function () {
-    $result = Mermaid::create('Diagram')->render();
-    expect($result)
-        ->toBe(sprintf(Mermaid::MERMAID, Diagram::OUTPUT))
+    $diagram = Mermaid::create('Diagram');
+
+    expect($diagram->render())
+        ->toBe("<pre class=\"mermaid\">\n"
+               . Diagram::OUTPUT . "\n"
+               . '</pre>'
+        )
+    ;
+});
+
+test('Mermaid with config', function () {
+    $diagram = Mermaid::create('Diagram', ['config' => [Diagram::TYPE => ['name' => 'value']]]);
+
+    expect($diagram->render())
+        ->toBe("<pre class=\"mermaid\">\n"
+             . '%%{init:{"diagram":{"name":"value"}}}' . "\n"
+             . Diagram::OUTPUT . "\n"
+             . '</pre>'
+        )
     ;
 });
