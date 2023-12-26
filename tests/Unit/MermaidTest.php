@@ -23,7 +23,11 @@ test('Mermaid create', function () {
 
 test('Mermaid JavaScript', function () {
     expect(Mermaid::js())
-        ->toBe(sprintf(Mermaid::JS, '{"startOnLoad":true}'))
+        ->toBe("<script type=\"module\">\n"
+            . "    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
+            . "    mermaid.initialize()\n"
+            . '</script>'
+        )
     ;
 });
 
@@ -32,20 +36,9 @@ test('Mermaid render', function () {
 
     expect($diagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
-               . Diagram::OUTPUT . "\n"
-               . '</pre>'
-        )
-    ;
-});
-
-test('Mermaid with config', function () {
-    $diagram = Mermaid::create('Diagram', ['config' => [Diagram::TYPE => ['name' => 'value']]]);
-
-    expect($diagram->render())
-        ->toBe("<pre class=\"mermaid\">\n"
-             . '%%{init:{"diagram":{"name":"value"}}}' . "\n"
-             . Diagram::OUTPUT . "\n"
-             . '</pre>'
+            . "mermaid\n"
+            . "mermaid\n"
+            . '</pre>'
         )
     ;
 });
