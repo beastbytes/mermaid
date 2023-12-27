@@ -35,6 +35,6 @@ class Mermaid
     /** @psalm-param list<string> $mermaid */
     public static function render(array $mermaid): string
     {
-        return sprintf(self::MERMAID, implode("\n", $mermaid));
+        return sprintf(self::MERMAID, htmlspecialchars(implode("\n", $mermaid)));
     }
 }
