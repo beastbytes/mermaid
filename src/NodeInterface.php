@@ -11,5 +11,4 @@ namespace BeastBytes\Mermaid;
 interface NodeInterface
 {
     public function getId(): string;
-    public function getStyleClass(): string;
 }

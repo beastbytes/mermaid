@@ -16,6 +16,4 @@ trait NodeTrait
     {
         return '_' . $this->id;
     }
-
-    abstract public function getStyleClass(): string;
 }
