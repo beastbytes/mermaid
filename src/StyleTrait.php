@@ -47,12 +47,9 @@ trait StyleTrait
         }
 
         foreach ($this->styleClasses as $class => $nodes) {
-            $ids = [];
             foreach ($nodes as $node) {
-                $ids[] = $node->getId();
+                $output[] = $node->getId() . ':::' . $class;
             }
-
-            $output[] = $node->getStyleClass() . ' ' . implode(',', $ids) . " $class";
         }
 
         return $indentation . implode("\n" . $indentation, $output);
