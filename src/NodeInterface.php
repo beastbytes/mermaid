@@ -10,5 +10,6 @@ namespace BeastBytes\Mermaid;
 
 interface NodeInterface
 {
+    /** @internal */
     public function getId(): string;
 }

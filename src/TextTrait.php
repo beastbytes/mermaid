@@ -8,18 +8,20 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
+/**
+ * Returns text formatted as plain text or Markdown
+ */
 trait TextTrait
 {
-    private function getText(?string $text, bool $isMarkdown): string
+    private readonly string $text;
+    private readonly bool $isMarkdown;
+
+    private function getText(string $prepend = '', string $append = '', ): string
     {
-        if ($text === null) {
+        if ($this->text === '') {
             return '';
         }
 
-        if ($isMarkdown) {
-            $text = '`' . $text . '`';
-        }
-
-        return '"' . $text . '"';
+        return $prepend . '"' . ($this->isMarkdown ? '`' . $this->text . '`' : $this->text) . '"' . $append;
     }
 }

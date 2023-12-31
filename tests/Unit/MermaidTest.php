@@ -8,9 +8,9 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Tests\Unit;
 
-use BeastBytes\Mermaid\Diagram\Diagram;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
+use BeastBytes\Mermaid\Tests\Support\Diagram;
 
 test('Mermaid create', function () {
     $diagram = Mermaid::create('Diagram');
@@ -36,8 +36,8 @@ test('Mermaid render', function () {
 
     expect($diagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
-            . "mermaid\n"
-            . "mermaid\n"
+            . "  Node1\n"
+            . "  Node2\n"
             . '</pre>'
         )
     ;

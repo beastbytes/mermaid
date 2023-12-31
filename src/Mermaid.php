@@ -10,6 +10,7 @@ namespace BeastBytes\Mermaid;
 
 class Mermaid
 {
+    public const CLASS_OPERATOR = ':::';
     public const INDENTATION = '  ';
     public const JS = "<script type=\"module\">\n    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n    mermaid.initialize(%s)\n</script>";
     private const MERMAID = "<pre class=\"mermaid\">\n%s\n</pre>";
