@@ -15,7 +15,7 @@ trait RenderItemsTrait
         $output = [];
 
         foreach ($items as $item) {
-            $output[] = $item->render($indentation . Mermaid::INDENTATION);
+            $output[] = $item->render($indentation);
         }
 
         return implode("\n", $output);
