@@ -16,7 +16,7 @@ trait DirectionTrait
     {
         $new = clone $this;
         $new->direction = $direction;
-        return $this;
+        return $new;
     }
 
     private function renderDirection(string $indentation): string
