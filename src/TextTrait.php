@@ -13,7 +13,7 @@ namespace BeastBytes\Mermaid;
  */
 trait TextTrait
 {
-    private string $text;
+    private readonly string $text;
     private readonly bool $isMarkdown;
 
     private function getText(string $prepend = '', string $append = '', ): string

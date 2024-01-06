@@ -15,7 +15,7 @@ const NODE_ID = 'nodeId';
 const STYLE_CLASS = 'styleClass';
 
 test('Node with StyleClass', function () {
-    $node = new Node(id: NODE_ID, styleClass: STYLE_CLASS);
+    $node = (new Node(id: NODE_ID))->withStyleClass(STYLE_CLASS);
 
     expect(Mermaid::CLASS_OPERATOR)
         ->toBe(':::')

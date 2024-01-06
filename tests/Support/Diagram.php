@@ -29,7 +29,7 @@ class Diagram implements MermaidInterface
     public function render(): string
     {
         $output = self::OUTPUT;
-        $output[] = $this->getClassDefs(Mermaid::INDENTATION);
+        $output[] = $this->renderClassDefs(Mermaid::INDENTATION);
         return Mermaid::render($output);
     }
 }

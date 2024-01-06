@@ -13,7 +13,7 @@ use BeastBytes\Mermaid\Tests\Support\Diagram;
 
 test('Diagram with ClassDefs', function () {
     $diagram = (new Diagram())
-        ->withClassDefs([
+        ->withClassDef([
             'class1' => 'font-size:12pt',
             'class2' => [
                 'fill' => '#f9f',
@@ -31,7 +31,7 @@ test('Diagram with ClassDefs', function () {
                . Mermaid::INDENTATION . "classDef class2 fill:#f9f,stroke:#333,stroke-width:4px;\n"
                . '</pre>'
         )
-        ->and($diagram->addClassDefs(['class3' => 'font-size:18pt'])->render())
+        ->and($diagram->addClassDef(['class3' => 'font-size:18pt'])->render())
         ->toBe("<pre class=\"mermaid\">\n"
                . Mermaid::INDENTATION . "Node1\n"
                . Mermaid::INDENTATION . "Node2\n"
@@ -40,7 +40,7 @@ test('Diagram with ClassDefs', function () {
                . Mermaid::INDENTATION . "classDef class3 font-size:18pt;\n"
                . '</pre>'
         )
-        ->and($diagram->withClassDefs(['class4' => 'font-size:24pt'])->render())
+        ->and($diagram->withClassDef(['class4' => 'font-size:24pt'])->render())
         ->toBe("<pre class=\"mermaid\">\n"
                . Mermaid::INDENTATION . "Node1\n"
                . Mermaid::INDENTATION . "Node2\n"

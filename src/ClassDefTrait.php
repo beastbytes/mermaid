@@ -13,21 +13,21 @@ trait ClassDefTrait
     /** @psalm-var array<string, array|string> $classDefs */
     private array $classDefs = [];
 
-    public function addClassDefs(array $classDefs): self
+    public function addClassDef(array $classDef): self
     {
         $new = clone $this;
-        $new->classDefs = array_merge($new->classDefs, $classDefs);
+        $new->classDefs = array_merge($new->classDefs, $classDef);
         return $new;
     }
 
-    public function withClassDefs(array $classDefs): self
+    public function withClassDef(array $classDef): self
     {
         $new = clone $this;
-        $new->classDefs = $classDefs;
+        $new->classDefs = $classDef;
         return $new;
     }
 
-    private function getClassDefs(string $indentation): string
+    private function renderClassDefs(string $indentation): string
     {
         $output = [];
 

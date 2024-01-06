@@ -23,7 +23,6 @@ class Node implements NodeInterface
         private readonly string $id,
         private readonly string $text = '',
         private readonly bool $isMarkdown = false,
-        private readonly string $styleClass = ''
     )
     {
     }

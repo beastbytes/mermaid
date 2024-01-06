@@ -10,9 +10,16 @@ namespace BeastBytes\Mermaid;
 
 trait DirectionTrait
 {
-    private readonly Direction $direction;
+    private Direction $direction = Direction::TB;
 
-    private function getDirection(string $indentation): string
+    public function withDirection(Direction $direction): self
+    {
+        $new = clone $this;
+        $new->direction = $direction;
+        return $this;
+    }
+
+    private function renderDirection(string $indentation): string
     {
         return $indentation . 'direction ' . $this->direction->name;
     }

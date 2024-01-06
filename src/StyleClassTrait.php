@@ -13,9 +13,16 @@ namespace BeastBytes\Mermaid;
  */
 trait StyleClassTrait
 {
-    private readonly string $styleClass;
+    private string $styleClass = '';
 
-    private function getStyleClass(): string
+    public function withStyleClass(string $styleClass): self
+    {
+        $new = clone $this;
+        $new->styleClass = $styleClass;
+        return $new;
+    }
+
+    protected function getStyleClass(): string
     {
         return $this->styleClass === '' ? '' : Mermaid::CLASS_OPERATOR . $this->styleClass;
     }
