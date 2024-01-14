@@ -12,8 +12,9 @@ class Mermaid
 {
     public const CLASS_OPERATOR = ':::';
     public const INDENTATION = '  ';
-    public const JS = "<script type=\"module\">\n    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n    mermaid.initialize(%s)\n</script>";
+    public const JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
     private const MERMAID = "<pre class=\"mermaid\">\n%s\n</pre>";
+    public const SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
 
     /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
     public static function create(string $name, array $parameters = []): MermaidInterface
@@ -31,6 +32,14 @@ class Mermaid
             self::JS,
             $config === null ? '' : json_encode($config, JSON_THROW_ON_ERROR)
         );
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public static function scriptTag(?array $config = null): string
+    {
+        return sprintf(self::SCRIPT_TAG, self::js($config));
     }
 
     /** @psalm-param list<string> $mermaid */

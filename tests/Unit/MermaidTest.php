@@ -23,9 +23,23 @@ test('Mermaid create', function () {
 
 test('Mermaid JavaScript', function () {
     expect(Mermaid::js())
+        ->toBe("import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
+            . 'mermaid.initialize()'
+        )
+        ->and(Mermaid::scriptTag())
         ->toBe("<script type=\"module\">\n"
-            . "    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
-            . "    mermaid.initialize()\n"
+            . "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
+            . "mermaid.initialize()\n"
+            . '</script>'
+        )
+        ->and(Mermaid::js(['startOnLoad' => true]))
+        ->toBe("import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
+            . 'mermaid.initialize({"startOnLoad":true})'
+        )
+        ->and(Mermaid::scriptTag(['startOnLoad' => true]))
+        ->toBe("<script type=\"module\">\n"
+            . "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\n"
+            . "mermaid.initialize({\"startOnLoad\":true})\n"
             . '</script>'
         )
     ;
