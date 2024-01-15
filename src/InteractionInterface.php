@@ -10,8 +10,7 @@ namespace BeastBytes\Mermaid;
 
 interface InteractionInterface
 {
-    public function getInteraction(): string;
-    public function hasInteraction(): bool;
+    public function renderInteraction(array &$output): void;
     public function withInteraction(
         string $interaction,
         InteractionType $type = InteractionType::Link,
