@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Diagram;
 
+use BeastBytes\Mermaid\InteractionTrait;
 use BeastBytes\Mermaid\NodeInterface;
 use BeastBytes\Mermaid\NodeTrait;
 use BeastBytes\Mermaid\StyleClassTrait;
@@ -15,6 +16,7 @@ use BeastBytes\Mermaid\TextTrait;
 
 class Node implements NodeInterface
 {
+    use InteractionTrait;
     use NodeTrait;
     use StyleClassTrait;
     use TextTrait;

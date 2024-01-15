@@ -27,7 +27,7 @@ trait ClassDefTrait
         return $new;
     }
 
-    private function getClassDefs(string $indentation, &$output): void
+    private function renderClassDefs(&$output): void
     {
         foreach ($this->classDefs as $name => $style) {
             if (is_array($style)) {
@@ -38,12 +38,7 @@ trait ClassDefTrait
                 $style = implode(',', $styles);
             }
 
-            $output[] = $indentation . "classDef $name $style;" ;
+            $output[] = Mermaid::INDENTATION . "classDef $name $style;" ;
         }
-    }
-
-    private function hasClassDef(): bool
-    {
-        return $this->classDefs !== [];
     }
 }

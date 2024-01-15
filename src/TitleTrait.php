@@ -19,15 +19,12 @@ trait TitleTrait
         return $new;
     }
 
-    private function getTitle(array &$output): void
+    private function renderTitle(array &$output): void
     {
-        $output[] = '---';
-        $output[] = 'title: ' . $this->title;
-        $output[] = '---';
-    }
-
-    private function hasTitle(): bool
-    {
-        return $this->title !== '';
+        if ($this->title !== '') {
+            $output[] = '---';
+            $output[] = 'title: ' . $this->title;
+            $output[] = '---';
+        }
     }
 }

@@ -10,23 +10,15 @@ namespace BeastBytes\Mermaid;
 
 trait InteractionRendererTrait
 {
-    private array $interactions = [];
-
-    private function getInteraction(InteractionInterface $object): void
+    /**
+     * @psalm-param list<InteractionInterface> $objects
+     * @param $output
+     * @return void
+     */
+    private function renderInteractions(array $objects, &$output): void
     {
-        if ($object->hasInteraction()) {
-            $this->interactions[] = $object->getInteraction();
+        foreach ($objects as $object) {
+            $object->renderInteraction($output);
         }
-    }
-
-    private function renderInteractions(): string
-    {
-        $output = [];
-
-        foreach ($this->interactions as $interaction) {
-            $output[] = Mermaid::INDENTATION . $interaction;
-        }
-
-        return implode("\n", $output);
     }
 }

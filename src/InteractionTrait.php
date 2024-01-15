@@ -11,19 +11,23 @@ namespace BeastBytes\Mermaid;
 trait InteractionTrait
 {
     private string $interaction = '';
+    private string $tooltip;
+    private InteractionType $type;
 
-    abstract public function getName(): string;
-
-    /** @internal */
-    public function getInteraction(): string
-    {
-        return $this->interaction;
-    }
+    abstract public function getId(): string;
 
     /** @internal */
-    public function hasInteraction(): bool
+    public function renderInteraction(array &$output): void
     {
-        return $this->interaction !== '';
+        if ($this->interaction !== '') {
+            $output[] = Mermaid::INDENTATION . 'click '
+                . $this->getId()
+                . ' '
+                . $this->type->value
+                . ' '
+                . ($this->type === InteractionType::Callback ? $this->interaction : '"' . $this->interaction . '"')
+                . ($this->tooltip === '' ? '' : ' "' . $this->tooltip . '"');
+        }
     }
 
     public function withInteraction(
@@ -33,13 +37,9 @@ trait InteractionTrait
     ): self
     {
         $new = clone $this;
-        $new->interaction = 'click '
-            . $this->getName()
-            . ' '
-            . $type->value
-            . ' '
-            . ($type === InteractionType::Callback ? $interaction : '"' . $interaction . '"')
-            . ($tooltip === '' ? '' : ' "' . $tooltip . '"');
+        $new->interaction = $interaction;
+        $new->type = $type;
+        $new->tooltip = $tooltip;
         return $new;
     }
 }

@@ -26,9 +26,4 @@ trait StyleClassTrait
     {
         return $this->styleClass === '' ? '' : Mermaid::CLASS_OPERATOR . $this->styleClass;
     }
-
-    private function hasStyleClass(): bool
-    {
-        return $this->styleClass !== '';
-    }
 }
