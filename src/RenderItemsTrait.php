@@ -10,14 +10,10 @@ namespace BeastBytes\Mermaid;
 
 trait RenderItemsTrait
 {
-    private function renderItems(array $items, string $indentation): string
+    private function renderItems(array $items, string $indentation, &$output): void
     {
-        $output = [];
-
         foreach ($items as $item) {
             $output[] = $item->render($indentation . Mermaid::INDENTATION);
         }
-
-        return implode("\n", $output);
     }
 }

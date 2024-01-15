@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright Copyright © 2023 BeastBytes - All rights reserved
+ * @copyright Copyright © 2024 BeastBytes - All rights reserved
  * @license BSD 3-Clause
  */
 
 declare(strict_types=1);
 
-namespace BeastBytes\Mermaid\Tests\Support;
+namespace BeastBytes\Mermaid\Diagram;
 
 use BeastBytes\Mermaid\NodeInterface;
 use BeastBytes\Mermaid\NodeTrait;
@@ -20,9 +20,7 @@ class Node implements NodeInterface
     use TextTrait;
 
     public function __construct(
-        private readonly string $id,
-        private readonly string $text = '',
-        private readonly bool $isMarkdown = false,
+        private readonly string $id
     )
     {
     }

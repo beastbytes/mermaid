@@ -8,10 +8,8 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
-enum Direction
+enum InteractionType: string
 {
-    case BT;
-    case LR;
-    case RL;
-    case TB;
+    case Callback = 'call';
+    case Link = 'href';
 }

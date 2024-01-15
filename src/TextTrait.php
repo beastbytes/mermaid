@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright © 2023 BeastBytes - All rights reserved
+ * @copyright Copyright © 2024 BeastBytes - All rights reserved
  * @license BSD 3-Clause
  */
 
@@ -13,8 +13,16 @@ namespace BeastBytes\Mermaid;
  */
 trait TextTrait
 {
-    private string $text;
-    private readonly bool $isMarkdown;
+    private string $text = '';
+    private bool $isMarkdown = false;
+
+    public function withText(string $text, bool $isMarkdown = false): self
+    {
+        $new = clone $this;
+        $new->text = $text;
+        $new->isMarkdown = $isMarkdown;
+        return $new;
+    }
 
     private function getText(string $prepend = '', string $append = '', ): string
     {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright © 2023 BeastBytes - All rights reserved
+ * @copyright Copyright © 2024 BeastBytes - All rights reserved
  * @license BSD 3-Clause
  */
 
@@ -27,10 +27,8 @@ trait ClassDefTrait
         return $new;
     }
 
-    private function renderClassDefs(string $indentation): string
+    private function getClassDefs(string $indentation, &$output): void
     {
-        $output = [];
-
         foreach ($this->classDefs as $name => $style) {
             if (is_array($style)) {
                 $styles = [];
@@ -40,9 +38,12 @@ trait ClassDefTrait
                 $style = implode(',', $styles);
             }
 
-            $output[] = "classDef $name $style;" ;
+            $output[] = $indentation . "classDef $name $style;" ;
         }
+    }
 
-        return $indentation . implode("\n" . $indentation, $output);
+    private function hasClassDef(): bool
+    {
+        return $this->classDefs !== [];
     }
 }

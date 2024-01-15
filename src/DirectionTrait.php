@@ -19,8 +19,8 @@ trait DirectionTrait
         return $new;
     }
 
-    private function renderDirection(string $indentation): string
+    private function getDirection(): string
     {
-        return $indentation . 'direction ' . $this->direction->name;
+        return 'direction ' . $this->direction->name;
     }
 }

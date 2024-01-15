@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright © 2023 BeastBytes - All rights reserved
+ * @copyright Copyright © 2024 BeastBytes - All rights reserved
  * @license BSD 3-Clause
  */
 
@@ -10,7 +10,7 @@ namespace BeastBytes\Mermaid\Tests\Unit;
 
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
-use BeastBytes\Mermaid\Tests\Support\Diagram;
+use BeastBytes\Mermaid\Diagram\Diagram;
 
 test('Mermaid create', function () {
     $diagram = Mermaid::create('Diagram');
@@ -50,8 +50,7 @@ test('Mermaid render', function () {
 
     expect($diagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
-            . "  Node1\n"
-            . "  Node2\n"
+            . "diagram\n"
             . '</pre>'
         )
     ;

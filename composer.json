@@ -32,7 +32,7 @@
     "autoload-dev": {
         "psr-4": {
             "BeastBytes\\Mermaid\\Tests\\": "tests",
-            "BeastBytes\\Mermaid\\Diagram\\": "tests/Support/diagram"
+            "BeastBytes\\Mermaid\\Diagram\\": "tests/Support"
         }
     },
     "config": {

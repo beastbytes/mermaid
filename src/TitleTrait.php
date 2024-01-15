@@ -10,10 +10,24 @@ namespace BeastBytes\Mermaid;
 
 trait TitleTrait
 {
-    private readonly string $title;
+    private string $title = '';
 
-    private function getTitle(): string
+    public function withTitle(string $title): self
     {
-        return implode("\n", ['---', 'title: ' . $this->title, '---']);
+        $new = clone $this;
+        $new->title = $title;
+        return $new;
+    }
+
+    private function getTitle(array &$output): void
+    {
+        $output[] = '---';
+        $output[] = 'title: ' . $this->title;
+        $output[] = '---';
+    }
+
+    private function hasTitle(): bool
+    {
+        return $this->title !== '';
     }
 }
