@@ -13,7 +13,7 @@ interface InteractionInterface
     public function renderInteraction(array &$output): void;
     public function withInteraction(
         string $interaction,
-        InteractionType $type = InteractionType::Link,
-        string $tooltip = ''
+        string $tooltip = '',
+        InteractionTarget $target = InteractionTarget::Self
     ): self;
 }

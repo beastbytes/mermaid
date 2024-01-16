@@ -12,6 +12,7 @@ trait InteractionTrait
 {
     private string $interaction = '';
     private string $tooltip;
+    private InteractionTarget $target;
     private InteractionType $type;
 
     abstract public function getId(): string;
@@ -26,20 +27,23 @@ trait InteractionTrait
                 . $this->type->value
                 . ' '
                 . ($this->type === InteractionType::Callback ? $this->interaction : '"' . $this->interaction . '"')
-                . ($this->tooltip === '' ? '' : ' "' . $this->tooltip . '"');
+                . ($this->tooltip === '' ? '' : ' "' . $this->tooltip . '"')
+                . ($this->type === InteractionType::Link ? ' ' . $this->target->value : '')
+            ;
         }
     }
 
     public function withInteraction(
         string $interaction,
-        InteractionType $type = InteractionType::Link,
-        string $tooltip = ''
+        string $tooltip = '',
+        InteractionTarget $target = InteractionTarget::Self,
     ): self
     {
         $new = clone $this;
         $new->interaction = $interaction;
-        $new->type = $type;
+        $new->target = $target;
         $new->tooltip = $tooltip;
+        $new->type = (str_contains($interaction, '//') ? InteractionType::Link : InteractionType::Callback);
         return $new;
     }
 }

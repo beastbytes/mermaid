@@ -22,10 +22,26 @@ test('Diagram with interactions', function () {
 
     expect($diagram->render())
         ->toBe("<pre class=\"mermaid\">\n"
-               . "diagram\n"
-               . "  _Node1\n"
-               . "  click _Node1 href &quot;https://example.com&quot;\n"
-               . '</pre>'
+            . "diagram\n"
+            . "  _Node1\n"
+            . "  click _Node1 href &quot;https://example.com&quot;\n"
+            . '</pre>'
+        )
+    ;
+    
+    $diagram = (new Diagram())
+        ->withNode(
+            (new Node('Node1'))
+                ->withInteraction('callback()')
+        )
+    ;
+
+    expect($diagram->render())
+        ->toBe("<pre class=\"mermaid\">\n"
+            . "diagram\n"
+            . "  _Node1\n"
+            . "  click _Node1 call callback()\n"
+            . '</pre>'
         )
     ;
 });
