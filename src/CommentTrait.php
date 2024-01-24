@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
-use phpDocumentor\Reflection\Types\Self_;
-
 trait CommentTrait
 {
     private string $comment = '';
