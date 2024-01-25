@@ -10,13 +10,14 @@ namespace BeastBytes\Mermaid\Tests\Unit;
 
 use BeastBytes\Mermaid\Diagram\Diagram;
 use BeastBytes\Mermaid\Diagram\Node;
+use BeastBytes\Mermaid\InteractionType;
 use BeastBytes\Mermaid\Mermaid;
 
 test('Diagram with interactions', function () {
     $diagram = (new Diagram())
         ->withNode(
             (new Node('Node1'))
-                ->withInteraction('https://example.com')
+                ->withInteraction('https://example.com', InteractionType::Link)
         )
     ;
 
@@ -28,11 +29,11 @@ test('Diagram with interactions', function () {
             . '</pre>'
         )
     ;
-    
+
     $diagram = (new Diagram())
         ->withNode(
             (new Node('Node1'))
-                ->withInteraction('callback()')
+                ->withInteraction('callback()', InteractionType::Callback)
         )
     ;
 

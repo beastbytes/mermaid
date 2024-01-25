@@ -35,15 +35,18 @@ trait InteractionTrait
 
     public function withInteraction(
         string $interaction,
+        InteractionType $type,
         string $tooltip = '',
         InteractionTarget $target = InteractionTarget::Self,
     ): self
     {
         $new = clone $this;
+
         $new->interaction = $interaction;
         $new->target = $target;
         $new->tooltip = $tooltip;
-        $new->type = (str_contains($interaction, '//') ? InteractionType::Link : InteractionType::Callback);
+        $new->type = $type;
+
         return $new;
     }
 }
