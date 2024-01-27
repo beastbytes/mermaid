@@ -10,5 +10,5 @@ namespace BeastBytes\Mermaid;
 
 interface MermaidInterface
 {
-    public function render(): string;
+    public function render(array $attributes = []): string;
 }
