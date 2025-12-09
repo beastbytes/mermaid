@@ -18,7 +18,7 @@ class Mermaid
 {
     public const CLASS_OPERATOR = ':::';
     public const INDENTATION = '  ';
-    public const JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
+    public const JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
     private const MERMAID = "<pre %s>\n%s\n</pre>";
     private const MERMAID_CLASS = 'mermaid';
     public const SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
@@ -72,7 +72,7 @@ class Mermaid
         return sprintf(
             self::MERMAID,
             self::renderAttributes($attributes),
-            htmlspecialchars(implode("\n", $mermaid))
+            implode("\n", $mermaid)
         );
     }
 
@@ -81,7 +81,8 @@ class Mermaid
      */
     private static function renderAttributes(array $attributes): string
     {
-        $html = '';
+        $attrs = [];
+
         /**
          * @var string $name
          * @var mixed $value
@@ -89,13 +90,13 @@ class Mermaid
         foreach ($attributes as $name => $value) {
             if (is_bool($value)) {
                 if ($value) {
-                    $html .= self::renderAttribute($name);
+                    $attrs[] = self::renderAttribute($name);
                 }
             } elseif (is_array($value)) {
                 if (in_array($name, self::DATA_ATTRIBUTES, true)) {
                     /** @psalm-var array<array-key, array|string|\Stringable|null> $value */
                     foreach ($value as $n => $v) {
-                        $html .= is_array($v)
+                        $attrs[] = is_array($v)
                             ? self::renderAttribute(
                                 $name . '-' . $n,
                                 json_encode(
@@ -112,9 +113,9 @@ class Mermaid
                     if (empty($value)) {
                         continue;
                     }
-                    $html .= self::renderAttribute($name, self::encodeAttribute(implode(' ', $value)));
+                    $attrs[] = self::renderAttribute($name, self::encodeAttribute(implode(' ', $value)));
                 } else {
-                    $html .= self::renderAttribute(
+                    $attrs[] = self::renderAttribute(
                         $name,
                         json_encode(
                             $value,
@@ -125,11 +126,11 @@ class Mermaid
                     );
                 }
             } elseif ($value !== null) {
-                $html .= self::renderAttribute($name, self::encodeAttribute($value));
+                $attrs[] = self::renderAttribute($name, self::encodeAttribute($value));
             }
         }
 
-        return $html;
+        return implode(' ', $attrs[]);
     }
 
     private static function encodeAttribute(mixed $value): string
