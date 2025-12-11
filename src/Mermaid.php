@@ -151,9 +151,9 @@ class Mermaid
     {
         // The value, along with the "=" character, can be omitted altogether if the value is the empty string.
         if ($encodedValue === '') {
-            return ' ' . $name;
+            return $name;
         }
 
-        return ' ' . $name . '=' . $quote . $encodedValue . $quote;
+        return $name . '=' . $quote . $encodedValue . $quote;
     }
 }
