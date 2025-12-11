@@ -130,7 +130,7 @@ class Mermaid
             }
         }
 
-        return implode(' ', $attrs[]);
+        return implode(' ', $attrs);
     }
 
     private static function encodeAttribute(mixed $value): string
