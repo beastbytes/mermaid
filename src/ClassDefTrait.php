@@ -27,8 +27,10 @@ trait ClassDefTrait
         return $new;
     }
 
-    private function renderClassDefs(&$output): void
+    private function renderClassDefs(): string
     {
+        $output = [];
+
         foreach ($this->classDefs as $name => $style) {
             if (is_array($style)) {
                 $styles = [];
@@ -40,5 +42,7 @@ trait ClassDefTrait
 
             $output[] = Mermaid::INDENTATION . "classDef $name $style;" ;
         }
+
+        return implode("\n", $output);
     }
 }

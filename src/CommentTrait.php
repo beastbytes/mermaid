@@ -10,7 +10,12 @@ namespace BeastBytes\Mermaid;
 
 trait CommentTrait
 {
-    private string $comment = '';
+    private ?string $comment = null;
+
+    public function hasComment(): bool
+    {
+        return is_string($this->comment);
+    }
 
     public function withComment(string $comment): self
     {
@@ -19,10 +24,8 @@ trait CommentTrait
         return $new;
     }
 
-    private function renderComment(string $indentation, array &$output): void
+    private function renderComment(string $indentation): ?string
     {
-        if ($this->comment !== '') {
-            $output[] = $indentation . '%% ' . $this->comment;
-        }
+        return $this->comment === null ? null : $indentation . '%% ' . $this->comment;
     }
 }

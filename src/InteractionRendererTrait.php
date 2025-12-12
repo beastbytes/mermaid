@@ -10,15 +10,14 @@ namespace BeastBytes\Mermaid;
 
 trait InteractionRendererTrait
 {
-    /**
-     * @psalm-param list<InteractionInterface> $objects
-     * @param $output
-     * @return void
-     */
-    private function renderInteractions(array $objects, &$output): void
+    private function renderInteractions(array $objects): string
     {
+        $output = [];
+
         foreach ($objects as $object) {
-            $object->renderInteraction($output);
+            $output[] = $object->renderInteraction();
         }
+
+        return implode("\n", $output);
     }
 }

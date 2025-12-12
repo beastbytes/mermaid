@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace BeastBytes\Mermaid\Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 

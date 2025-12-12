@@ -1,5 +1,8 @@
 <?php
 
+const NODE_ID = 'nodeId';
+const STYLE_CLASS = 'styleClass';
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
