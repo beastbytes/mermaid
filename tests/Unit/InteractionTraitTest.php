@@ -1,20 +1,16 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Tests\Unit;
 
-use BeastBytes\Mermaid\Diagram\Diagram;
-use BeastBytes\Mermaid\Diagram\Node;
 use BeastBytes\Mermaid\InteractionType;
 use BeastBytes\Mermaid\Mermaid;
+use BeastBytes\Mermaid\Tests\Support\Diagram;
+use BeastBytes\Mermaid\Tests\Support\Node;
 
 test('Diagram with interactions', function () {
-    $diagram = (new Diagram())
+    $diagram = Mermaid::create(Diagram::class)
         ->withNode(
             (new Node('Node1'))
                 ->withInteraction('https://example.com', InteractionType::Link)
@@ -25,7 +21,7 @@ test('Diagram with interactions', function () {
         ->toBe("<pre class=\"mermaid\">\n"
             . "diagram\n"
             . "  _Node1\n"
-            . "  click _Node1 href &quot;https://example.com&quot;\n"
+            . "  click _Node1 href \"https://example.com\" _self\n"
             . '</pre>'
         )
     ;

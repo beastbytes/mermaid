@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace BeastBytes\Mermaid\Diagram;
+namespace BeastBytes\Mermaid\Tests\Support;
 
 use BeastBytes\Mermaid\InteractionInterface;
 use BeastBytes\Mermaid\InteractionTrait;

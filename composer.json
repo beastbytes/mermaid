@@ -15,11 +15,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.1"
+        "php": "^8.3"
     },
     "require-dev": {
-        "pestphp/pest": "^v2.0",
-        "roave/infection-static-analysis-plugin": "^1.0",
+        "pestphp/pest": "^4.0",
         "roave/security-advisories": "dev-latest",
         "vimeo/psalm": "^6.0"
     },
@@ -30,8 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "BeastBytes\\Mermaid\\Tests\\": "tests",
-            "BeastBytes\\Mermaid\\Diagram\\": "tests/Support"
+            "BeastBytes\\Mermaid\\Tests\\": "tests"
         }
     },
     "config": {
@@ -42,7 +40,6 @@
     },
     "scripts": {
         "post-install-cmd": "./vendor/bin/pest --init",
-        "infection": "roave-infection-static-analysis-plugin",
         "psalm": "psalm",
         "test": "pest"
     }

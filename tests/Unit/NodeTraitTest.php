@@ -1,16 +1,10 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Tests\Unit;
 
-use BeastBytes\Mermaid\Diagram\Node;
-
-const NODE_ID = 'nodeId';
+use BeastBytes\Mermaid\Tests\Support\Node;
 
 test('Simple node', function () {
     $node = new Node(NODE_ID);

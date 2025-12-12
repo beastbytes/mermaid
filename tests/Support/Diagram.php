@@ -6,23 +6,19 @@
 
 declare(strict_types=1);
 
-namespace BeastBytes\Mermaid\Diagram;
+namespace BeastBytes\Mermaid\Tests\Support;
 
 use BeastBytes\Mermaid\ClassDefTrait;
 use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\InteractionRendererTrait;
-use BeastBytes\Mermaid\Mermaid;
-use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
-use BeastBytes\Mermaid\TitleTrait;
 
-class Diagram implements MermaidInterface
+class Diagram extends \BeastBytes\Mermaid\Diagram
 {
     use CommentTrait;
     use ClassDefTrait;
     use InteractionRendererTrait;
     use RenderItemsTrait;
-    use TitleTrait;
 
     private const TYPE = 'diagram';
 
@@ -38,19 +34,20 @@ class Diagram implements MermaidInterface
     /**
      * @throws \JsonException
      */
-    public function render(): string
+    public function renderDiagram(): string
     {
-        $output = [];
+        $diagram = [];
 
-        $this->renderTitle($output);
-        $this->renderComment('', $output);
+        if ($this->hasComment()) {
+            $diagram[] = $this->renderComment('');
+        }
 
-        $output[] = self::TYPE;
+        $diagram[] = self::TYPE;
 
-        $this->renderItems($this->nodes, '', $output);
-        $this->renderInteractions($this->nodes, $output);
-        $this->renderClassDefs( $output);
+        $diagram[] = $this->renderItems($this->nodes, '');
+        $diagram[] = $this->renderInteractions($this->nodes);
+        $diagram[] = $this->renderClassDefs();
 
-        return Mermaid::render($output);
+        return implode("\n", array_filter($diagram, fn($v) => !empty($v)));
     }
 }

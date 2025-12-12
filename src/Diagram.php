@@ -1,27 +1,16 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
-use const JSON_HEX_AMP;
-use const JSON_HEX_APOS;
-use const JSON_HEX_QUOT;
-use const JSON_HEX_TAG;
-use const JSON_UNESCAPED_UNICODE;
-
-class Mermaid
+/**
+ * Diagram is the base class for all diagram types
+ */
+abstract class Diagram
 {
-    public const CLASS_OPERATOR = ':::';
-    public const INDENTATION = '  ';
-    public const JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
     private const MERMAID = "<pre %s>\n%s\n</pre>";
     private const MERMAID_CLASS = 'mermaid';
-    public const SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
 
     /**
      * List of tag attributes that should be specially handled when their values are of array type.
@@ -30,39 +19,57 @@ class Mermaid
      */
     private const DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
 
-    /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
-    public static function create(string $diagram, array $frontmatter= []): Diagram
+    private array $frontmatter = [];
+
+    abstract protected function renderDiagram(): string;
+
+    public function render(array $attributes = []): string
     {
-        if (!str_contains($diagram, '\\')) {
-            $diagram =  __NAMESPACE__ . str_repeat("\\$diagram", 2);
+        $mermaid = $this->renderFrontmatter();
+        $mermaid .= $this->renderDiagram();
+
+        return sprintf(self::MERMAID, $this->renderAttributes($attributes), $mermaid);
+    }
+
+    public function withFrontmatter(array $frontmatter): self
+    {
+        $new = clone $this;
+        $new->frontmatter = $frontmatter;
+        return $new;
+    }
+
+    private function renderFrontmatter(): string
+    {
+        $frontmatter = $this->array2yaml($this->frontmatter, 0);
+
+        if (empty($frontmatter)) {
+            return '';
         }
 
-        return (new $diagram())->withFrontmatter($frontmatter);
+        return "---$frontmatter\n---\n";
+    }
+
+    private function array2yaml(array $ary, int $level): string
+    {
+        $yaml = '';
+        $i = str_repeat(' ', 2 * $level);
+
+        foreach ($ary as $k => $v) {
+            if (is_array($v)) {
+                $v = $this->array2yaml($v, $level + 1);
+                $yaml .= "\n$i$k:$v";
+            } else {
+                $yaml .= "\n$i$k: $v";
+            }
+        }
+
+        return $yaml;
     }
 
     /**
      * @throws \JsonException
      */
-    public static function js(?array $config = null): string
-    {
-        return sprintf(
-            self::JS,
-            $config === null ? '' : json_encode($config, JSON_THROW_ON_ERROR)
-        );
-    }
-
-    /**
-     * @throws \JsonException
-     */
-    public static function scriptTag(?array $config = null): string
-    {
-        return sprintf(self::SCRIPT_TAG, self::js($config));
-    }
-
-    /** @psalm-param list<string> $mermaid
-     * @throws \JsonException
-     */
-    public static function render(array $mermaid, array $attributes = []): string
+    private function renderAttributes(array $attributes): string
     {
         if (isset($attributes['class'])) {
             if (!str_contains($attributes['class'], self::MERMAID_CLASS)) {
@@ -72,18 +79,6 @@ class Mermaid
             $attributes['class'] = self::MERMAID_CLASS;
         }
 
-        return sprintf(
-            self::MERMAID,
-            self::renderAttributes($attributes),
-            implode("\n", $mermaid)
-        );
-    }
-
-    /**
-     * @throws \JsonException
-     */
-    private static function renderAttributes(array $attributes): string
-    {
         $attrs = [];
 
         /**
@@ -93,14 +88,14 @@ class Mermaid
         foreach ($attributes as $name => $value) {
             if (is_bool($value)) {
                 if ($value) {
-                    $attrs[] = self::renderAttribute($name);
+                    $attrs[] = $this->renderAttribute($name);
                 }
             } elseif (is_array($value)) {
                 if (in_array($name, self::DATA_ATTRIBUTES, true)) {
                     /** @psalm-var array<array-key, array|string|\Stringable|null> $value */
                     foreach ($value as $n => $v) {
                         $attrs[] = is_array($v)
-                            ? self::renderAttribute(
+                            ? $this->renderAttribute(
                                 $name . '-' . $n,
                                 json_encode(
                                     $v,
@@ -109,16 +104,16 @@ class Mermaid
                                 ),
                                 '\''
                             )
-                            : self::renderAttribute($name . '-' . $n, self::encodeAttribute($v));
+                            : $this->renderAttribute($name . '-' . $n, $this->encodeAttribute($v));
                     }
                 } elseif ($name === 'class') {
                     /** @var string[] $value */
                     if (empty($value)) {
                         continue;
                     }
-                    $attrs[] = self::renderAttribute($name, self::encodeAttribute(implode(' ', $value)));
+                    $attrs[] = $this->renderAttribute($name, $this->encodeAttribute(implode(' ', $value)));
                 } else {
-                    $attrs[] = self::renderAttribute(
+                    $attrs[] = $this->renderAttribute(
                         $name,
                         json_encode(
                             $value,
@@ -129,14 +124,14 @@ class Mermaid
                     );
                 }
             } elseif ($value !== null) {
-                $attrs[] = self::renderAttribute($name, self::encodeAttribute($value));
+                $attrs[] = $this->renderAttribute($name, $this->encodeAttribute($value));
             }
         }
 
         return implode(' ', $attrs);
     }
 
-    private static function encodeAttribute(mixed $value): string
+    private function encodeAttribute(mixed $value): string
     {
         $value = htmlspecialchars(
             (string) $value,
@@ -150,7 +145,7 @@ class Mermaid
         ]);
     }
 
-    private static function renderAttribute(string $name, string $encodedValue = '', string $quote = '"'): string
+    private function renderAttribute(string $name, string $encodedValue = '', string $quote = '"'): string
     {
         // The value, along with the "=" character, can be omitted altogether if the value is the empty string.
         if ($encodedValue === '') {
