@@ -1,8 +1,4 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
@@ -15,7 +11,11 @@ trait InteractionRendererTrait
         $output = [];
 
         foreach ($objects as $object) {
-            $output[] = $object->renderInteraction();
+            $interaction = $object->renderInteraction();
+
+            if (is_string($interaction)) {
+                $output[] = $interaction;
+            }
         }
 
         return implode("\n", $output);
