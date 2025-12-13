@@ -28,7 +28,11 @@ abstract class Diagram
         $mermaid = $this->renderFrontmatter();
         $mermaid .= $this->renderDiagram();
 
-        return sprintf(self::MERMAID, $this->renderAttributes($attributes), $mermaid);
+        return sprintf(
+            self::MERMAID,
+            $this->renderAttributes($attributes),
+            htmlspecialchars($mermaid)
+        );
     }
 
     public function withFrontmatter(array $frontmatter): self
