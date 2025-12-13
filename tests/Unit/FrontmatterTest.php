@@ -15,7 +15,7 @@ test('Diagram with Frontmatter', function () {
             'config' => [
                 'theme' => 'base',
                 'themeVariables' => [
-                    'primaryColor' => "'#00ff00'",
+                    'primaryColor' => '"#00ff00"',
                 ],
             ],
         ]
@@ -28,7 +28,7 @@ test('Diagram with Frontmatter', function () {
             . "config:\n"
             . "  theme: base\n"
             . "  themeVariables:\n"
-            . "    primaryColor: '#00ff00'\n"
+            . "    primaryColor: &quot;#00ff00&quot;\n"
             . "---\n"
             . "diagram\n"
             . '</pre>'

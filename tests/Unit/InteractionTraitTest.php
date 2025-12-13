@@ -21,7 +21,7 @@ test('Diagram with interactions', function () {
         ->toBe("<pre class=\"mermaid\">\n"
             . "diagram\n"
             . "  _Node1\n"
-            . "  click _Node1 href \"https://example.com\" _self\n"
+            . "  click _Node1 href &quot;https://example.com&quot; _self\n"
             . '</pre>'
         )
     ;
