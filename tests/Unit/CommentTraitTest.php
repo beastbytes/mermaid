@@ -12,10 +12,12 @@ test('Diagram with a comment', function () {
     ;
 
     expect($diagram->render())
-        ->toBe("<pre class=\"mermaid\">\n"
-               . "%% Diagram comment\n"
-               . "diagram\n"
-               . '</pre>'
+        ->toBe(<<<MERMAID
+<pre class="mermaid">
+%% Diagram comment
+diagram
+</pre>
+MERMAID
         )
     ;
 });

@@ -22,16 +22,18 @@ test('Diagram with Frontmatter', function () {
     );
 
     expect($diagram->render())
-        ->toBe("<pre class=\"mermaid\">\n"
-            . "---\n"
-            . "title: Diagram title\n"
-            . "config:\n"
-            . "  theme: base\n"
-            . "  themeVariables:\n"
-            . "    primaryColor: &quot;#00ff00&quot;\n"
-            . "---\n"
-            . "diagram\n"
-            . '</pre>'
+        ->toBe(<<<MERMAID
+<pre class="mermaid">
+---
+title: Diagram title
+config:
+  theme: base
+  themeVariables:
+    primaryColor: &quot;#00ff00&quot;
+---
+diagram
+</pre>
+MERMAID
         )
     ;
 });

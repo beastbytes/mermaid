@@ -10,13 +10,19 @@ const NODE_ID = 'nodeId';
 const NODE_TEXT = 'Node text';
 
 test('Node with text', function () {
-    expect((new Node(id: NODE_ID))->withText(text: NODE_TEXT)->render(''))
+    expect((new Node(id: NODE_ID))
+        ->withText(text: NODE_TEXT)
+        ->render('')
+    )
         ->toBe('_' . NODE_ID . ' "' . NODE_TEXT . '"')
     ;
 });
 
 test('Node with Markdown text', function () {
-    expect((new Node(id: NODE_ID))->withText(text: NODE_TEXT, isMarkdown: true)->render(''))
+    expect((new Node(id: NODE_ID))
+        ->withText(text: NODE_TEXT, isMarkdown: true)
+        ->render('')
+    )
         ->toBe('_' . NODE_ID . ' "`' . NODE_TEXT . '`"')
     ;
 });

@@ -8,7 +8,9 @@ use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\Tests\Support\Node;
 
 test('Node with StyleClass', function () {
-    $node = (new Node(id: NODE_ID))->withStyleClass(STYLE_CLASS);
+    $node = (new Node(id: NODE_ID))
+        ->withStyleClass(STYLE_CLASS)
+    ;
 
     expect(Mermaid::CLASS_OPERATOR)
         ->toBe(':::')

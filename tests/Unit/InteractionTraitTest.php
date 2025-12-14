@@ -18,11 +18,13 @@ test('Diagram with interactions', function () {
     ;
 
     expect($diagram->render())
-        ->toBe("<pre class=\"mermaid\">\n"
-            . "diagram\n"
-            . "  _Node1\n"
-            . "  click _Node1 href &quot;https://example.com&quot; _self\n"
-            . '</pre>'
+        ->toBe(<<<MERMAID
+<pre class="mermaid">
+diagram
+  _Node1
+  click _Node1 href &quot;https://example.com&quot; _self
+</pre>
+MERMAID
         )
     ;
 
@@ -34,11 +36,13 @@ test('Diagram with interactions', function () {
     ;
 
     expect($diagram->render())
-        ->toBe("<pre class=\"mermaid\">\n"
-            . "diagram\n"
-            . "  _Node1\n"
-            . "  click _Node1 call callback()\n"
-            . '</pre>'
+        ->toBe(<<<MERMAID
+<pre class="mermaid">
+diagram
+  _Node1
+  click _Node1 call callback()
+</pre>
+MERMAID
         )
     ;
 });

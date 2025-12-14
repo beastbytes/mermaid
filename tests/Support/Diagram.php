@@ -12,6 +12,7 @@ use BeastBytes\Mermaid\ClassDefTrait;
 use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\InteractionRendererTrait;
 use BeastBytes\Mermaid\RenderItemsTrait;
+use BeastBytes\Mermaid\TitleTrait;
 
 class Diagram extends \BeastBytes\Mermaid\Diagram
 {
@@ -19,6 +20,7 @@ class Diagram extends \BeastBytes\Mermaid\Diagram
     use ClassDefTrait;
     use InteractionRendererTrait;
     use RenderItemsTrait;
+    use TitleTrait;
 
     private const TYPE = 'diagram';
 
@@ -34,7 +36,7 @@ class Diagram extends \BeastBytes\Mermaid\Diagram
     /**
      * @throws \JsonException
      */
-    public function renderDiagram(): string
+    protected function renderDiagram(): string
     {
         $diagram = [];
 
@@ -43,7 +45,8 @@ class Diagram extends \BeastBytes\Mermaid\Diagram
         }
 
         $diagram[] = self::TYPE;
-
+        $diagram[] = $this->renderTitle('');
+        $diagram[] = $this->renderTitle('', self::QUOTE);
         $diagram[] = $this->renderItems($this->nodes, '');
         $diagram[] = $this->renderInteractions($this->nodes);
         $diagram[] = $this->renderClassDefs();
