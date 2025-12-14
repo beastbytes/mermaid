@@ -40,10 +40,7 @@ class Diagram extends \BeastBytes\Mermaid\Diagram
     {
         $diagram = [];
 
-        if ($this->hasComment()) {
-            $diagram[] = $this->renderComment('');
-        }
-
+        $diagram[] = $this->renderComment('');
         $diagram[] = self::TYPE;
         $diagram[] = $this->renderTitle('');
         $diagram[] = $this->renderTitle('', self::QUOTE);

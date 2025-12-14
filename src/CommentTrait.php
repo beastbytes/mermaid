@@ -8,11 +8,6 @@ trait CommentTrait
 {
     private ?string $comment = null;
 
-    public function hasComment(): bool
-    {
-        return is_string($this->comment);
-    }
-
     public function withComment(string $comment): self
     {
         $new = clone $this;
@@ -20,8 +15,8 @@ trait CommentTrait
         return $new;
     }
 
-    private function renderComment(string $indentation): ?string
+    private function renderComment(string $indentation): string
     {
-        return $this->comment === null ? null : $indentation . '%% ' . $this->comment;
+        return is_string($this->comment) ? $indentation . '%% ' . $this->comment : '';
     }
 }
