@@ -6,6 +6,7 @@ namespace BeastBytes\Mermaid\Tests\Unit;
 
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\Tests\Support\Diagram;
+use BeastBytes\Mermaid\Tests\Support\Node;
 
 test('Mermaid create', function () {
     $diagram = Mermaid::create(Diagram::class);
@@ -47,5 +48,17 @@ test('Mermaid render', function () {
             . "diagram\n"
             . '</pre>'
         )
+    ;
+});
+
+test('ID generation', function() {
+    expect(Mermaid::getId(Diagram::class))
+        ->toBe(0)
+        ->and(Mermaid::getId(Diagram::class))
+        ->toBe(1)
+        ->and(Mermaid::getId(Node::class))
+        ->toBe(0)
+        ->and(Mermaid::getId(Diagram::class))
+        ->toBe(2)
     ;
 });

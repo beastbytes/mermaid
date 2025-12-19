@@ -26,6 +26,9 @@ class Mermaid
      */
     private const DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
 
+    /** @var array<string, int> Tracks auto-generated object IDs to ensure uniqueness */
+    private static array $ids = [];
+
     /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
     public static function create(string $diagram, array $frontmatter= []): Diagram
     {
@@ -34,6 +37,17 @@ class Mermaid
         }
 
         return (new $diagram())->withFrontmatter($frontmatter);
+    }
+
+    public static function getId(string $class): int
+    {
+        if (array_key_exists($class, self::$ids)) {
+            self::$ids[$class]++;
+        } else {
+            self::$ids[$class] = 0;
+        }
+
+        return self::$ids[$class];
     }
 
     /**
