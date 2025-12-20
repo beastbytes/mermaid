@@ -14,7 +14,7 @@ test('Node with text', function () {
         ->withText(text: NODE_TEXT)
         ->render('')
     )
-        ->toBe('_' . NODE_ID . ' "' . NODE_TEXT . '"')
+        ->toBe(NODE_ID . ' "' . NODE_TEXT . '"')
     ;
 });
 
@@ -23,6 +23,6 @@ test('Node with Markdown text', function () {
         ->withText(text: NODE_TEXT, isMarkdown: true)
         ->render('')
     )
-        ->toBe('_' . NODE_ID . ' "`' . NODE_TEXT . '`"')
+        ->toBe(NODE_ID . ' "`' . NODE_TEXT . '`"')
     ;
 });

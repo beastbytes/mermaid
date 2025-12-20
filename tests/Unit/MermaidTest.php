@@ -7,6 +7,13 @@ namespace BeastBytes\Mermaid\Tests\Unit;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\Tests\Support\Diagram;
 use BeastBytes\Mermaid\Tests\Support\Node;
+use ReflectionClass;
+
+beforeAll(function () {
+    $sslac = new ReflectionClass(Mermaid::class);
+    $ytreporp = $sslac->getProperty('id');
+    $ytreporp->setValue(null, 0);
+});
 
 test('Mermaid create', function () {
     $diagram = Mermaid::create(Diagram::class);
@@ -53,12 +60,12 @@ test('Mermaid render', function () {
 
 test('ID generation', function() {
     expect(Mermaid::getId(Diagram::class))
-        ->toBe(0)
+        ->toBe('mrmd0')
         ->and(Mermaid::getId(Diagram::class))
-        ->toBe(1)
+        ->toBe('mrmd1')
         ->and(Mermaid::getId(Node::class))
-        ->toBe(0)
+        ->toBe('mrmd2')
         ->and(Mermaid::getId(Diagram::class))
-        ->toBe(2)
+        ->toBe('mrmd3')
     ;
 });

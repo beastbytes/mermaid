@@ -15,6 +15,6 @@ test('Node with StyleClass', function () {
     expect(Mermaid::CLASS_OPERATOR)
         ->toBe(':::')
         ->and($node->render(''))
-        ->toBe('_' . NODE_ID . Mermaid::CLASS_OPERATOR . STYLE_CLASS)
+        ->toBe(NODE_ID . Mermaid::CLASS_OPERATOR . STYLE_CLASS)
     ;
 });

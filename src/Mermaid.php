@@ -12,12 +12,13 @@ use const JSON_UNESCAPED_UNICODE;
 
 class Mermaid
 {
-    public const CLASS_OPERATOR = ':::';
-    public const INDENTATION = '  ';
-    public const JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
-    private const MERMAID = "<pre %s>\n%s\n</pre>";
-    private const MERMAID_CLASS = 'mermaid';
-    public const SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
+    public const string CLASS_OPERATOR = ':::';
+    public const string ID_PREFIX = 'mrmd';
+    public const string INDENTATION = '  ';
+    public const string JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
+    private const string MERMAID = "<pre %s>\n%s\n</pre>";
+    private const string MERMAID_CLASS = 'mermaid';
+    public const string SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
 
     /**
      * List of tag attributes that should be specially handled when their values are of array type.
@@ -26,8 +27,8 @@ class Mermaid
      */
     private const DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
 
-    /** @var array<string, int> Tracks auto-generated object IDs to ensure uniqueness */
-    private static array $ids = [];
+    /** @var int Tracks auto-generated object IDs to ensure uniqueness */
+    private static int $id = 0;
 
     /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
     public static function create(string $diagram, array $frontmatter= []): Diagram
@@ -39,15 +40,9 @@ class Mermaid
         return (new $diagram())->withFrontmatter($frontmatter);
     }
 
-    public static function getId(string $class): int
+    public static function getId(): string
     {
-        if (array_key_exists($class, self::$ids)) {
-            self::$ids[$class]++;
-        } else {
-            self::$ids[$class] = 0;
-        }
-
-        return self::$ids[$class];
+        return self::ID_PREFIX . self::$id++;
     }
 
     /**

@@ -1,8 +1,4 @@
 <?php
-/**
- * @copyright Copyright © 2024 BeastBytes - All rights reserved
- * @license BSD 3-Clause
- */
 
 declare(strict_types=1);
 
@@ -10,22 +6,20 @@ namespace BeastBytes\Mermaid\Tests\Support;
 
 use BeastBytes\Mermaid\InteractionInterface;
 use BeastBytes\Mermaid\InteractionTrait;
-use BeastBytes\Mermaid\NodeInterface;
-use BeastBytes\Mermaid\NodeTrait;
+use BeastBytes\Mermaid\IdTrait;
 use BeastBytes\Mermaid\StyleClassTrait;
 use BeastBytes\Mermaid\TextTrait;
 
-class Node implements NodeInterface, InteractionInterface
+class Node implements InteractionInterface
 {
+    use IdTrait;
     use InteractionTrait;
-    use NodeTrait;
     use StyleClassTrait;
     use TextTrait;
 
-    public function __construct(
-        private readonly string $id
-    )
+    public function __construct(?string $id = null)
     {
+        $this->id = $id;
     }
 
     public function render(string $indentation)

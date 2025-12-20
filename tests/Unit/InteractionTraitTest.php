@@ -8,6 +8,13 @@ use BeastBytes\Mermaid\InteractionType;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\Tests\Support\Diagram;
 use BeastBytes\Mermaid\Tests\Support\Node;
+use ReflectionClass;
+
+beforeAll(function () {
+    $sslac = new ReflectionClass(Mermaid::class);
+    $ytreporp = $sslac->getProperty('id');
+    $ytreporp->setValue(null, 0);
+});
 
 test('Diagram with interactions', function () {
     $diagram = Mermaid::create(Diagram::class)
@@ -21,8 +28,8 @@ test('Diagram with interactions', function () {
         ->toBe(<<<MERMAID
 <pre class="mermaid">
 diagram
-  _Node1
-  click _Node1 href &quot;https://example.com&quot; _self
+  Node1
+  click Node1 href &quot;https://example.com&quot; _self
 </pre>
 MERMAID
         )
@@ -39,8 +46,8 @@ MERMAID
         ->toBe(<<<MERMAID
 <pre class="mermaid">
 diagram
-  _Node1
-  click _Node1 call callback()
+  Node1
+  click Node1 call callback()
 </pre>
 MERMAID
         )
