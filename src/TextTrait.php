@@ -13,7 +13,10 @@ namespace BeastBytes\Mermaid;
  */
 trait TextTrait
 {
-    private string $text = '';
+    private const string MARKDOWN = '`%s`';
+    private const string QUOTED = '"%s"';
+
+    private ?string $text = null;
     private bool $isMarkdown = false;
 
     public function withText(string $text, bool $isMarkdown = false): self
@@ -24,12 +27,17 @@ trait TextTrait
         return $new;
     }
 
-    private function getText(string $prepend = '', string $append = '', ): string
+    private function getText(bool $quoted = false): string
     {
-        if ($this->text === '') {
-            return '';
+        if (is_string($this->text)) {
+            $text = $this->isMarkdown
+                ? sprintf(self::MARKDOWN, $this->text)
+                : $this->text
+            ;
+
+            return $quoted ? sprintf(self::QUOTED, $text) : $text;
         }
 
-        return $prepend . '"' . ($this->isMarkdown ? '`' . $this->text . '`' : $this->text) . '"' . $append;
+        return '';
     }
 }

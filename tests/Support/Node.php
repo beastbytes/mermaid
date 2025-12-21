@@ -24,6 +24,7 @@ class Node implements InteractionInterface
 
     public function render(string $indentation)
     {
-        return $indentation . $this->getId() . $this->getStyleClass() . $this->getText(' ');
+        $text = $this->getText(true);
+        return $indentation . $this->getId() . $this->getStyleClass() . ($text ? " $text" : '');
     }
 }
