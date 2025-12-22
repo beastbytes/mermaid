@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\Tests\Support;
 
+use BeastBytes\Mermaid\IconTrait;
 use BeastBytes\Mermaid\InteractionInterface;
 use BeastBytes\Mermaid\InteractionTrait;
 use BeastBytes\Mermaid\IdTrait;
@@ -12,6 +13,7 @@ use BeastBytes\Mermaid\TextTrait;
 
 class Node implements InteractionInterface
 {
+    use IconTrait;
     use IdTrait;
     use InteractionTrait;
     use StyleClassTrait;
@@ -25,6 +27,11 @@ class Node implements InteractionInterface
     public function render(string $indentation)
     {
         $text = $this->getText(true);
-        return $indentation . $this->getId() . $this->getStyleClass() . ($text ? " $text" : '');
+        return $indentation
+            . $this->getId()
+            . $this->getStyleClass()
+            . $this->renderIcon()
+            . ($text ? " $text" : '')
+        ;
     }
 }
