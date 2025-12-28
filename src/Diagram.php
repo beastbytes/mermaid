@@ -4,25 +4,31 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
+use JsonException;
+
 /**
  * Diagram is the base class for all diagram types
  */
 abstract class Diagram
 {
-    private const MERMAID = "<pre %s>\n%s\n</pre>";
-    private const MERMAID_CLASS = 'mermaid';
+    private const string MERMAID = "<pre %s>\n%s\n</pre>";
+    private const string MERMAID_CLASS = 'mermaid';
 
     /**
+     * @psalm-type list<string>
      * List of tag attributes that should be specially handled when their values are of array type.
      * In particular, if the value of the `data` attribute is `['name' => 'xyz', 'age' => 13]`, two attributes will be
      * generated instead of one: `data-name="xyz" data-age="13"`.
      */
-    private const DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
+    private const array DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
 
     private array $frontmatter = [];
 
     abstract protected function renderDiagram(): string;
 
+    /**
+     * @throws JsonException
+     */
     public function render(array $attributes = []): string
     {
         $mermaid = $this->renderFrontmatter();
@@ -71,7 +77,7 @@ abstract class Diagram
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function renderAttributes(array $attributes): string
     {
