@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
+use JsonException;
 use const JSON_HEX_AMP;
 use const JSON_HEX_APOS;
 use const JSON_HEX_QUOT;
@@ -25,7 +26,7 @@ class Mermaid
      * In particular, if the value of the `data` attribute is `['name' => 'xyz', 'age' => 13]`, two attributes will be
      * generated instead of one: `data-name="xyz" data-age="13"`.
      */
-    private const DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
+    private const array DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
 
     /** @var int Tracks auto-generated object IDs to ensure uniqueness */
     private static int $id = 0;
@@ -33,10 +34,6 @@ class Mermaid
     /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
     public static function create(string $diagram, array $frontmatter= []): Diagram
     {
-        if (!str_contains($diagram, '\\')) {
-            $diagram =  __NAMESPACE__ . str_repeat("\\$diagram", 2);
-        }
-
         return (new $diagram())->withFrontmatter($frontmatter);
     }
 
@@ -46,7 +43,7 @@ class Mermaid
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function js(?array $config = null): string
     {
@@ -57,7 +54,7 @@ class Mermaid
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function scriptTag(?array $config = null): string
     {
@@ -65,7 +62,7 @@ class Mermaid
     }
 
     /** @psalm-param list<string> $mermaid
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function render(array $mermaid, array $attributes = []): string
     {
@@ -85,7 +82,7 @@ class Mermaid
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private static function renderAttributes(array $attributes): string
     {
