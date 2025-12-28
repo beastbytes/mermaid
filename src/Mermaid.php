@@ -17,8 +17,6 @@ class Mermaid
     public const string ID_PREFIX = 'mrmd';
     public const string INDENTATION = '  ';
     public const string JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
-    private const string MERMAID = "<pre %s>\n%s\n</pre>";
-    private const string MERMAID_CLASS = 'mermaid';
     public const string SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
 
     /**
@@ -59,106 +57,5 @@ class Mermaid
     public static function scriptTag(?array $config = null): string
     {
         return sprintf(self::SCRIPT_TAG, self::js($config));
-    }
-
-    /** @psalm-param list<string> $mermaid
-     * @throws JsonException
-     */
-    public static function render(array $mermaid, array $attributes = []): string
-    {
-        if (isset($attributes['class'])) {
-            if (!str_contains($attributes['class'], self::MERMAID_CLASS)) {
-                $attributes['class'] .= ' ' . self::MERMAID_CLASS;
-            }
-        } else {
-            $attributes['class'] = self::MERMAID_CLASS;
-        }
-
-        return sprintf(
-            self::MERMAID,
-            self::renderAttributes($attributes),
-            implode("\n", $mermaid)
-        );
-    }
-
-    /**
-     * @throws JsonException
-     */
-    private static function renderAttributes(array $attributes): string
-    {
-        $attrs = [];
-
-        /**
-         * @var string $name
-         * @var mixed $value
-         */
-        foreach ($attributes as $name => $value) {
-            if (is_bool($value)) {
-                if ($value) {
-                    $attrs[] = self::renderAttribute($name);
-                }
-            } elseif (is_array($value)) {
-                if (in_array($name, self::DATA_ATTRIBUTES, true)) {
-                    /** @psalm-var array<array-key, array|string|\Stringable|null> $value */
-                    foreach ($value as $n => $v) {
-                        $attrs[] = is_array($v)
-                            ? self::renderAttribute(
-                                $name . '-' . $n,
-                                json_encode(
-                                    $v,
-                                    JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_THROW_ON_ERROR,
-                                    512
-                                ),
-                                '\''
-                            )
-                            : self::renderAttribute($name . '-' . $n, self::encodeAttribute($v));
-                    }
-                } elseif ($name === 'class') {
-                    /** @var string[] $value */
-                    if (empty($value)) {
-                        continue;
-                    }
-                    $attrs[] = self::renderAttribute($name, self::encodeAttribute(implode(' ', $value)));
-                } else {
-                    $attrs[] = self::renderAttribute(
-                        $name,
-                        json_encode(
-                            $value,
-                            JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_THROW_ON_ERROR,
-                            512
-                        ),
-                        '\''
-                    );
-                }
-            } elseif ($value !== null) {
-                $attrs[] = self::renderAttribute($name, self::encodeAttribute($value));
-            }
-        }
-
-        return implode(' ', $attrs);
-    }
-
-    private static function encodeAttribute(mixed $value): string
-    {
-        $value = htmlspecialchars(
-            (string) $value,
-            ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5,
-            'UTF-8',
-            true
-        );
-
-        return strtr($value, [
-            "\u{0000}" => '&#0;', // U+0000 NULL
-        ]);
-    }
-
-    private static function renderAttribute(string $name, string $encodedValue = '', string $quote = '"'): string
-    {
-        // The value, along with the "=" character, can be omitted altogether if the value is the empty string.
-        if ($encodedValue === '') {
-            return $name;
-        }
-
-        return $name . '=' . $quote . $encodedValue . $quote;
     }
 }
