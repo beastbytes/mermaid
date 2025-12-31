@@ -30,7 +30,7 @@ class Mermaid
     private static int $id = 0;
 
     /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
-    public static function create(string $diagram, array $frontmatter= []): Diagram
+    public static function create(string $diagram, array $frontmatter = []): Diagram
     {
         return (new $diagram())->withFrontmatter($frontmatter);
     }

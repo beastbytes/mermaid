@@ -6,6 +6,6 @@ namespace BeastBytes\Mermaid;
 
 enum InteractionType: string
 {
-    case Callback = 'call';
-    case Link = 'href';
+    case callback = 'call';
+    case link = 'href';
 }

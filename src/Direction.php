@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid;
 
-enum Direction
+enum Direction: string
 {
-    case BT;
-    case LR;
-    case RL;
-    case TB;
+    case bottomTop = 'BT';
+    case leftRight = 'LR';
+    case rightLeft = 'RL';
+    case topBottom = 'TB';
 }

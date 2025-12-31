@@ -6,8 +6,8 @@ namespace BeastBytes\Mermaid;
 
 enum InteractionTarget: string
 {
-    case Blank = '_blank';
-    case Parent = '_parent';
-    case Self = '_self';
-    case Top = '_top';
+    case blank = '_blank';
+    case parent = '_parent';
+    case self = '_self';
+    case top = '_top';
 }
