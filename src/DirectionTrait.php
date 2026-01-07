@@ -6,7 +6,7 @@ namespace BeastBytes\Mermaid;
 
 trait DirectionTrait
 {
-    private Direction $direction = Direction::TB;
+    private Direction $direction = Direction::topBottom;
 
     public function withDirection(Direction $direction): self
     {

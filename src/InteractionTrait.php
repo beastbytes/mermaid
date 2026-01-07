@@ -7,7 +7,7 @@ namespace BeastBytes\Mermaid;
 trait InteractionTrait
 {
     private ?string $interaction = null;
-    private string $tooltip;
+    private ?string $tooltip = null;
     private InteractionTarget $target;
     private InteractionType $type;
 
@@ -16,24 +16,24 @@ trait InteractionTrait
     /** @internal */
     public function renderInteraction(): ?string
     {
-        return $this->interaction === null
-            ? null
-            : Mermaid::INDENTATION . 'click '
+        return is_string($this->interaction)
+            ? Mermaid::INDENTATION . 'click '
                 . $this->getId()
                 . ' '
                 . $this->type->value
                 . ' '
-                . ($this->type === InteractionType::Callback ? $this->interaction : '"' . $this->interaction . '"')
-                . ($this->tooltip === '' ? '' : ' "' . $this->tooltip . '"')
-                . ($this->type === InteractionType::Link ? ' ' . $this->target->value : '')
+                . ($this->type === InteractionType::callback ? $this->interaction : '"' . $this->interaction . '"')
+                . (is_string($this->tooltip) ? ' "' . $this->tooltip . '"' : '')
+                . ($this->type === InteractionType::link ? ' ' . $this->target->value : '')
+            : null
         ;
     }
 
     public function withInteraction(
         string $interaction,
         InteractionType $type,
-        string $tooltip = '',
-        InteractionTarget $target = InteractionTarget::Self,
+        ?string $tooltip = null,
+        InteractionTarget $target = InteractionTarget::self,
     ): self
     {
         $new = clone $this;

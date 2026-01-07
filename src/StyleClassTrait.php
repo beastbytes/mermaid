@@ -9,7 +9,7 @@ namespace BeastBytes\Mermaid;
  */
 trait StyleClassTrait
 {
-    private string $styleClass = '';
+    private ?string $styleClass = null;
 
     public function withStyleClass(string $styleClass): self
     {
@@ -20,6 +20,6 @@ trait StyleClassTrait
 
     private function getStyleClass(): string
     {
-        return $this->styleClass === '' ? '' : Mermaid::CLASS_OPERATOR . $this->styleClass;
+        return is_string($this->styleClass) ? Mermaid::CLASS_OPERATOR . $this->styleClass : '';
     }
 }
