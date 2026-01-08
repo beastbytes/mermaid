@@ -10,7 +10,7 @@ interface InteractionInterface
     public function withInteraction(
         string $interaction,
         InteractionType $type,
-        string $tooltip = '',
-        InteractionTarget $target = InteractionTarget::Self
+        ?string $tooltip = null,
+        InteractionTarget $target = InteractionTarget::self
     ): self;
 }
