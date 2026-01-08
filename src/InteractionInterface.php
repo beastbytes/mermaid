@@ -9,8 +9,8 @@ interface InteractionInterface
     public function renderInteraction(): ?string;
     public function withInteraction(
         string $interaction,
-        InteractionType $type,
+        InteractionType $interactionType,
         ?string $tooltip = null,
-        InteractionTarget $target = InteractionTarget::self
+        InteractionTarget $interactionTarget = InteractionTarget::self
     ): self;
 }

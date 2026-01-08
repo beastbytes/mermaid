@@ -8,8 +8,8 @@ trait InteractionTrait
 {
     private ?string $interaction = null;
     private ?string $tooltip = null;
-    private InteractionTarget $target;
-    private InteractionType $type;
+    private InteractionTarget $interactionTarget;
+    private InteractionType $interactionType;
 
     abstract public function getId(): string;
 
@@ -20,28 +20,31 @@ trait InteractionTrait
             ? Mermaid::INDENTATION . 'click '
                 . $this->getId()
                 . ' '
-                . $this->type->value
+                . $this->interactionType->value
                 . ' '
-                . ($this->type === InteractionType::callback ? $this->interaction : '"' . $this->interaction . '"')
+                . ($this->interactionType === InteractionType::callback
+                    ? $this->interaction
+                    : '"' . $this->interaction . '"'
+                )
                 . (is_string($this->tooltip) ? ' "' . $this->tooltip . '"' : '')
-                . ($this->type === InteractionType::link ? ' ' . $this->target->value : '')
+                . ($this->interactionType === InteractionType::link ? ' ' . $this->interactionTarget->value : '')
             : null
         ;
     }
 
     public function withInteraction(
         string $interaction,
-        InteractionType $type,
+        InteractionType $interactionType,
         ?string $tooltip = null,
-        InteractionTarget $target = InteractionTarget::self,
+        InteractionTarget $interactionTarget = InteractionTarget::self,
     ): self
     {
         $new = clone $this;
 
         $new->interaction = $interaction;
-        $new->target = $target;
+        $new->interactionTarget = $interactionTarget;
         $new->tooltip = $tooltip;
-        $new->type = $type;
+        $new->interactionType = $interactionType;
 
         return $new;
     }
