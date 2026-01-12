@@ -18,9 +18,16 @@ jobs:
         with:
           name: html-docs
           path: docs/build/html
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
         if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/build/html
+        uses: actions/deploy-pages@v4
