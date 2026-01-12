@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -15,6 +15,8 @@ jobs:
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: docs/source
+      - name: Set up Pages
+        uses: actions/configure-pages@v5
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -24,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pages: write
+      id-token: write
     needs: build
     environment:
       name: github-pages
