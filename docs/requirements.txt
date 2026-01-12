@@ -1,1 +1,1 @@
-phpdomain
+sphinxcontrib.phpdomain
