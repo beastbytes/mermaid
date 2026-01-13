@@ -1,12 +1,15 @@
-name: "Sphinx: Render docs"
+name: "Build and Deploy Sphinx Docs to GitHub Pages"
 
 on: push
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,9 +29,6 @@ jobs:
           path: 'docs/build/html'
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     needs: build
     environment:
       name: github-pages
