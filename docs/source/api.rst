@@ -12,6 +12,7 @@ Classes
     Renders a Mermaid chart or diagram
 
     :param array $attributes: HTML attributes for the <pre> tag as name=>value pairs
+
     .. note:: The `mermaid` class is added
 
     :returns: A Mermaid chart or diagram code in a <pre> tag
