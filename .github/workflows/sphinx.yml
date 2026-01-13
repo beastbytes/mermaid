@@ -13,8 +13,6 @@ jobs:
           persist-credentials: false
       - name: Build HTML
         uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: docs/source
       - name: Set up Pages
         uses: actions/configure-pages@v5
       - name: Upload artifacts
