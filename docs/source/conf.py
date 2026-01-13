@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Mermaid Mindmap'
+project = 'Mermaid'
 copyright = '2025, BeastBytes'
 author = 'BeastBytes'
 
