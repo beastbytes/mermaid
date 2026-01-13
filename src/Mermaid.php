@@ -19,20 +19,18 @@ class Mermaid
     public const string JS = "import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'\nmermaid.initialize(%s)";
     public const string SCRIPT_TAG = "<script type=\"module\">\n%s\n</script>";
 
-    /**
-     * List of tag attributes that should be specially handled when their values are of array type.
-     * In particular, if the value of the `data` attribute is `['name' => 'xyz', 'age' => 13]`, two attributes will be
-     * generated instead of one: `data-name="xyz" data-age="13"`.
-     */
-    private const array DATA_ATTRIBUTES = ['data', 'data-ng', 'ng', 'aria'];
-
     /** @var int Tracks auto-generated object IDs to ensure uniqueness */
     private static int $id = 0;
 
-    /** @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType */
+    /**
+     * @template T of Diagram
+     * @param class-string<T> $diagram
+     * @param array<string, array|string> $frontmatter
+     * @return T
+     */
     public static function create(string $diagram, array $frontmatter = []): Diagram
     {
-        return (new $diagram())->withFrontmatter($frontmatter);
+        return new $diagram($frontmatter);
     }
 
     public static function getId(): string

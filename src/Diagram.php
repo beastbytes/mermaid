@@ -7,10 +7,15 @@ namespace BeastBytes\Mermaid;
 use JsonException;
 
 /**
- * Diagram is the base class for all diagram types
+ * Diagram is the base class for all diagram types.
  */
 abstract class Diagram
 {
+    private const string FRONTMATTER = <<<FRONTMATTER
+---
+%s
+---
+FRONTMATTER;
     private const string MERMAID = "<pre %s>\n%s\n</pre>";
     private const string MERMAID_CLASS = 'mermaid';
 
@@ -26,7 +31,17 @@ abstract class Diagram
 
     abstract protected function renderDiagram(): string;
 
+
     /**
+     * @param array<string, array|string> $frontmatter
+     */
+    final public function __construct(array $frontmatter)
+    {
+        $this->frontmatter = $frontmatter;
+    }
+
+    /**
+     * @param array<string, list<string>|bool|int|string> $attributes
      * @throws JsonException
      */
     public function render(array $attributes = []): string
@@ -37,26 +52,19 @@ abstract class Diagram
         return sprintf(
             self::MERMAID,
             $this->renderAttributes($attributes),
-            htmlspecialchars($mermaid)
+            htmlspecialchars($mermaid),
         );
-    }
-
-    public function withFrontmatter(array $frontmatter): self
-    {
-        $new = clone $this;
-        $new->frontmatter = $frontmatter;
-        return $new;
     }
 
     private function renderFrontmatter(): string
     {
-        $frontmatter = $this->array2yaml($this->frontmatter, 0);
-
-        if (empty($frontmatter)) {
+        if (empty($this->frontmatter)) {
             return '';
         }
 
-        return "---$frontmatter\n---\n";
+        $frontmatter = $this->array2yaml($this->frontmatter, 0);
+
+        return sprintf(self::FRONTMATTER, $frontmatter);
     }
 
     private function array2yaml(array $ary, int $level): string
@@ -110,9 +118,9 @@ abstract class Diagram
                                 json_encode(
                                     $v,
                                     JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_THROW_ON_ERROR,
-                                    512
+                                    512,
                                 ),
-                                '\''
+                                '\'',
                             )
                             : $this->renderAttribute($name . '-' . $n, $this->encodeAttribute($v));
                     }
@@ -128,9 +136,9 @@ abstract class Diagram
                         json_encode(
                             $value,
                             JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_THROW_ON_ERROR,
-                            512
+                            512,
                         ),
-                        '\''
+                        '\'',
                     );
                 }
             } elseif ($value !== null) {
@@ -147,7 +155,7 @@ abstract class Diagram
             (string) $value,
             ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5,
             'UTF-8',
-            true
+            true,
         );
 
         return strtr($value, [
