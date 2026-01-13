@@ -13,10 +13,7 @@ author = 'BeastBytes'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [
-  'sphinx-rtd-theme',
-  'sphinxcontrib.phpdomain'
-]
+extensions = ['sphinxcontrib.phpdomain']
 
 templates_path = ['_templates']
 exclude_patterns = []
