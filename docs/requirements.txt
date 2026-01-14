@@ -1,2 +1,2 @@
+furo
 sphinxcontrib.phpdomain
-sphinx-rtd-theme
