@@ -16,7 +16,12 @@ The Mermaid package provides:
 * traits that chart and diagrams use; the functions they provide are documented in the packages that use them
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents
+    :maxdepth: 2
+    :caption: Contents
 
-   api
+    api
+   
+.. seealso::
+
+    `Mermaid JS <https://mermaid.js.org>`__
+   
