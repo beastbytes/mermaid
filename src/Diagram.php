@@ -52,7 +52,7 @@ FRONTMATTER;
         return sprintf(
             self::MERMAID,
             $this->renderAttributes($attributes),
-            htmlspecialchars($mermaid),
+            $mermaid,
         );
     }
 
