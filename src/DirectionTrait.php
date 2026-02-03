@@ -17,6 +17,6 @@ trait DirectionTrait
 
     private function getDirection(): string
     {
-        return 'direction ' . $this->direction->name;
+        return 'direction ' . $this->direction->value;
     }
 }
