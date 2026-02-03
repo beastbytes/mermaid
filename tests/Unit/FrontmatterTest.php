@@ -25,11 +25,11 @@ test('Diagram with Frontmatter', function () {
         ->toBe(<<<MERMAID
 <pre class="mermaid">
 ---
-title: Diagram title
+title:Diagram title
 config:
-  theme: base
+  theme:base
   themeVariables:
-    primaryColor: &quot;#00ff00&quot;
+    primaryColor:"#00ff00"
 ---
 diagram
 </pre>

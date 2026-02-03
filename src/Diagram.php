@@ -15,6 +15,7 @@ abstract class Diagram
 ---
 %s
 ---
+
 FRONTMATTER;
     private const string MERMAID = "<pre %s>\n%s\n</pre>";
     private const string MERMAID_CLASS = 'mermaid';
@@ -69,19 +70,19 @@ FRONTMATTER;
 
     private function array2yaml(array $ary, int $level): string
     {
-        $yaml = '';
+        $yaml = [];
         $i = str_repeat(' ', 2 * $level);
 
         foreach ($ary as $k => $v) {
             if (is_array($v)) {
                 $v = $this->array2yaml($v, $level + 1);
-                $yaml .= "\n$i$k:$v";
+                $yaml[] = "$i$k:\n$v";
             } else {
-                $yaml .= "\n$i$k: $v";
+                $yaml[] = "$i$k:$v";
             }
         }
 
-        return $yaml;
+        return implode("\n", $yaml);
     }
 
     /**
